@@ -34,7 +34,12 @@ func (o *Object) Reset() {
 	o.Tx, o.Ty = 0, 0
 	o.Sx, o.Sy, o.Scale = 0, 0, 0
 	o.Rx, o.Ry, o.Angle = 0, 0, 0
+	o.Vx, o.Vy = 0, 0
 	o.Time = 0
+}
+
+func (o *Object) Stop() {
+	o.Vx, o.Vy = 0, 0
 }
 
 func (o *Object) Arrange(e sprite.Engine, n *sprite.Node, t clock.Time) {
