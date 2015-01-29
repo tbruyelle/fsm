@@ -30,6 +30,14 @@ type Action interface {
 	Do(o *Object, t clock.Time)
 }
 
+// Node creates a registered node from the Object and append it.
+func (o *Object) Node(parent *sprite.Node, eng sprite.Engine) {
+	n := &sprite.Node{}
+	eng.Register(n)
+	parent.AppendChild(n)
+	n.Arranger = o
+}
+
 func (o *Object) Reset() {
 	o.Tx, o.Ty = 0, 0
 	o.Sx, o.Sy, o.Scale = 0, 0, 0
