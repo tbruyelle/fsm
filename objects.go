@@ -102,9 +102,6 @@ func (o *Object) Arrange(e sprite.Engine, n *sprite.Node, t clock.Time) {
 
 // Collide performs an AABB collision.
 func (o0 *Object) Collide(o *Object) bool {
-	if o.Dead {
-		return false
-	}
 	if o.X >= o0.X+o0.Width || o.X+o.Width <= o0.X || o.Y >= o0.Y+o0.Height || o.Y+o.Height <= o0.Y {
 		return false
 	}
