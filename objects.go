@@ -91,29 +91,10 @@ func (o *Object) Arrange(e sprite.Engine, n *sprite.Node, t clock.Time) {
 	e.SetTransform(n, *mv)
 }
 
-type ActionFunc func(o *Object, t clock.Time)
-
-func (a ActionFunc) Do(o *Object, t clock.Time) {
-	a(o, t)
-}
-
-// wait pauses the display of the current object
-type wait struct {
-	until clock.Time
-	next  Action
-}
-
-func (w wait) Do(o *Object, t clock.Time) {
-	if o.Time == 0 {
-		o.Time = t
-		o.Dead = true
-		return
+// Collide performs an AABB collision.
+func (o0 *Object) Collide(o *Object) bool {
+	if o.X >= o0.X+o0.Width || o.X+o.Width <= o0.X || o.Y >= o0.Y+o0.Height || o.Y+o.Height <= o0.Y {
+		return false
 	}
-	if t > o.Time+w.until {
-		// Once the time is elapsed,
-		// start the next Action
-		o.Time = 0
-		o.Dead = false
-		o.Action = w.next
-	}
+	return true
 }
