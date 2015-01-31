@@ -10,8 +10,8 @@ func (a ActionFunc) Do(o *Object, t clock.Time) {
 
 // Wait pauses the display of the current object
 type Wait struct {
-	until clock.Time
-	next  Action
+	Until clock.Time
+	Next  Action
 }
 
 func (w Wait) Do(o *Object, t clock.Time) {
@@ -20,11 +20,11 @@ func (w Wait) Do(o *Object, t clock.Time) {
 		o.Dead = true
 		return
 	}
-	if t > o.Time+w.until {
+	if t > o.Time+w.Until {
 		// Once the time is elapsed,
 		// start the next Action
 		o.Time = 0
 		o.Dead = false
-		o.Action = w.next
+		o.Action = w.Next
 	}
 }

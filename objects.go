@@ -31,11 +31,12 @@ type Action interface {
 }
 
 // Node creates a registered node from the Object and append it.
-func (o *Object) Node(parent *sprite.Node, eng sprite.Engine) {
+func (o *Object) Node(parent *sprite.Node, eng sprite.Engine) *sprite.Node {
 	n := &sprite.Node{}
 	eng.Register(n)
 	parent.AppendChild(n)
 	n.Arranger = o
+	return n
 }
 
 func (o *Object) Reset() {
