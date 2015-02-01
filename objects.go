@@ -16,12 +16,12 @@ type Object struct {
 	// Translation
 	Tx, Ty float32
 	// Scale
-	Sx, Sy, Scale float32
-	Width, Height float32
-	Sprite        sprite.SubTex
-	Action        Action
-	Dead          bool
-	Time          clock.Time
+	Sx, Sy, ScaleX, ScaleY float32
+	Width, Height          float32
+	Sprite                 sprite.SubTex
+	Action                 Action
+	Dead                   bool
+	Time                   clock.Time
 	// Data contains any relevant information needed about the object
 	Data interface{}
 }
@@ -41,7 +41,7 @@ func (o *Object) Node(parent *sprite.Node, eng sprite.Engine) *sprite.Node {
 
 func (o *Object) Reset() {
 	o.Tx, o.Ty = 0, 0
-	o.Sx, o.Sy, o.Scale = 0, 0, 0
+	o.Sx, o.Sy, o.ScaleX, o.ScaleY = 0, 0, 0, 0
 	o.Rx, o.Ry, o.Angle = 0, 0, 0
 	o.Vx, o.Vy = 0, 0
 	o.Time = 0
@@ -75,7 +75,7 @@ func (o *Object) Arrange(e sprite.Engine, n *sprite.Node, t clock.Time) {
 		// Optim when angle and scale use the same transformation
 		mv.Translate(mv, o.Rx+o.Tx, o.Ry+o.Ty)
 		mv.Rotate(mv, -o.Angle)
-		mv.Scale(mv, o.Scale, o.Scale)
+		mv.Scale(mv, o.ScaleX, o.ScaleY)
 		mv.Translate(mv, -o.Rx-o.Tx, -o.Ry-o.Ty)
 	} else {
 		if o.Angle != 0 {
@@ -85,7 +85,7 @@ func (o *Object) Arrange(e sprite.Engine, n *sprite.Node, t clock.Time) {
 		}
 		if o.Sx > 0 || o.Sy > 0 {
 			mv.Translate(mv, o.Sx+o.Tx, o.Sy+o.Ty)
-			mv.Scale(mv, o.Scale, o.Scale)
+			mv.Scale(mv, o.ScaleX, o.ScaleY)
 			mv.Translate(mv, -o.Sx-o.Tx, -o.Sy-o.Ty)
 		}
 	}
