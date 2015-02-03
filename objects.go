@@ -7,6 +7,7 @@ import (
 )
 
 type Object struct {
+	*sprite.Node
 	// Position
 	X, Y float32
 	// Speed
@@ -30,13 +31,15 @@ type Action interface {
 	Do(o *Object, t clock.Time)
 }
 
-// Node creates a registered node from the Object and append it.
-func (o *Object) Node(parent *sprite.Node, eng sprite.Engine) *sprite.Node {
-	n := &sprite.Node{}
-	eng.Register(n)
-	parent.AppendChild(n)
-	n.Arranger = o
-	return n
+// Register registers the node in the engine, and append to the parent
+// if provided.
+func (o *Object) Register(parent *Object, eng sprite.Engine) {
+	o.Node = new(sprite.Node)
+	o.Arranger = o
+	eng.Register(o.Node)
+	if parent != nil {
+		parent.AppendChild(o.Node)
+	}
 }
 
 func (o *Object) Reset() {
