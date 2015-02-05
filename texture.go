@@ -33,8 +33,8 @@ func MustLoadTexture(eng sprite.Engine, file string) sprite.Texture {
 }
 
 // SubTex returns a new sprite.SubTex cut from a sprite.Texture.
-func SubTex(t sprite.Texture, x, y, w, h int) sprite.SubTex {
-	return sprite.SubTex{t, image.Rect(x, y, w, h)}
+func SubTex(t sprite.Texture, x1, y1, x2, y2 int) sprite.SubTex {
+	return sprite.SubTex{t, image.Rect(x1, y1, x2, y2)}
 }
 
 // MustLoadColorTexture creates a sprite.SubTex from a standard color.Color or panics.
